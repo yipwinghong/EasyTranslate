@@ -1,65 +1,49 @@
 //index.js
 //获取应用实例
+import {translate} from '../../utils/translate.js'
 const app = getApp()
 
 Page({
   data: {
     hideClearIcon: true,
     query: '',
+    curLang: {}
   },
 
-  onInput: function(e) {
-    console.log(this.data.hideClearIcon)
-    this.setData({'query': e.detail.value})
-    this.setData({ 'hideClearIcon': this.data.query.length === 0})
-  }
+  // 初始化
+  onShow: function () {
+    if (this.data.curLang.lang !== app.globalData.curLang.lang) {
+      this.setData({ curLang: app.globalData.curLang })
+      this.onConfirm()
+    }
+  },
 
-  // data: {
-  //   motto: 'Hello World',
-  //   userInfo: {},
-  //   hasUserInfo: false,
-  //   canIUse: wx.canIUse('button.open-type.getUserInfo')
-  // },
-  // //事件处理函数
-  // bindViewTap: function() {
-  //   wx.navigateTo({
-  //     url: '../logs/logs'
-  //   })
-  // },
-  // onLoad: function () {
-  //   if (app.globalData.userInfo) {
-  //     this.setData({
-  //       userInfo: app.globalData.userInfo,
-  //       hasUserInfo: true
-  //     })
-  //   } else if (this.data.canIUse){
-  //     // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-  //     // 所以此处加入 callback 以防止这种情况
-  //     app.userInfoReadyCallback = res => {
-  //       this.setData({
-  //         userInfo: res.userInfo,
-  //         hasUserInfo: true
-  //       })
-  //     }
-  //   } else {
-  //     // 在没有 open-type=getUserInfo 版本的兼容处理
-  //     wx.getUserInfo({
-  //       success: res => {
-  //         app.globalData.userInfo = res.userInfo
-  //         this.setData({
-  //           userInfo: res.userInfo,
-  //           hasUserInfo: true
-  //         })
-  //       }
-  //     })
-  //   }
-  // },
-  // getUserInfo: function(e) {
-  //   console.log(e)
-  //   app.globalData.userInfo = e.detail.userInfo
-  //   this.setData({
-  //     userInfo: e.detail.userInfo,
-  //     hasUserInfo: true
-  //   })
-  // }
+  // 设置输入文本
+  onInput: function(e) {
+    this.setData({'query': e.detail.value})
+    this.setData({'hideClearIcon': this.data.query.length === 0})
+  },
+  
+  // 清空编辑框
+  onTapClose: function() {
+    this.setData({ query: '', hideClearIcon: true})
+  },
+  
+  // 查询翻译
+  onConfirm: function () {
+    if (!this.data.query)
+      return
+
+    // 调用百度翻译API
+    translate(this.data.query, { from: 'auto', to: this.data.curLang.lang })
+      .then(
+        res => {
+          this.setData({ 'result': res.trans_result })
+          let history = wx.getStorageSync('history') || []
+          history.unshift({ query: this.data.query, result: res.trans_result[0].dst })
+          history.length = history.length > 10 ? 10 : history.length
+          wx.setStorageSync('history', history)   // 保存翻译历史（最多10条）
+      }
+    )
+  }
 })

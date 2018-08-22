@@ -1,5 +1,20 @@
 <!--pages/test/change.wxml-->
-
-<view class='container page-change'>
-
+<view class='container'>
+  <view class="title">翻译为: </view>
+  <view class="item" 
+        data-chs="{{language.chs}}" 
+        data-lang="{{language.lang}}" 
+        data-index="{{index}}" 
+        wx:for="{{langList}}" 
+        wx:key="index" 
+        wx:for-item="language" 
+        bindtap='onTapItem'  
+        hover-class="view-hover"
+  >
+    <view class="txt">
+      {{language.chs}}
+      <text class="iconfont icon-duihao" wx:if="{{index===curLang.index}}">
+      </text>
+    </view> 
+  </view>
 </view>

@@ -1,1 +1,17 @@
 /* pages/test/test.wxss */
+
+view.title {
+  background-color: #fff;
+  border: 10rpx solid #f5fafe;
+  padding: 20rpx;
+  color: #8995a1;
+  font-size: 30rpx;
+}
+view.item {
+  font-weight: bold;
+  display: flex;
+  background-color: #fff;
+  padding: 20rpx;
+  color: #8995a1;
+  border: 5rpx solid #f5fafe;
+}

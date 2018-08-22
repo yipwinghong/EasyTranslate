@@ -1,76 +1,26 @@
 // pages/test/test.js
-
 const util = require('../../utils/util.js')
+const app = getApp()
 
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-    name: 'ywh'
+    curLang: {},
+    langList: app.globalData.langList
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-  
+  // 加载当前选择语言
+  onShow: function() {
+    this.setData({curLang: app.globalData.curLang})
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
-  },
-  showHello: function(e) {
-    wx.showToast({
-      // title: '成功',
-      title: util.formatTime(new Date()),
-      duration: 1000
+  // 选择语言
+  onTapItem: function(e) {
+    let lang = e.currentTarget.dataset
+    wx.setStorageSync('language', lang)
+    this.setData({'curLang': lang})
+    app.globalData.curLang = lang
+    wx.switchTab({
+      url: '/pages/index/index',
     })
   }
 })

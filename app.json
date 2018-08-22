@@ -6,12 +6,13 @@
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#1c1b21",
+    "navigationBarBackgroundColor": "#000000",
     "navigationBarTitleText": "EasyTranslate",
     "navigationBarTextStyle": "white"
   },
   "tabBar": {
     "borderStyle": "white",
+    "backgroundColor": "#ffffff",
     "position": "top",
     "color": "#595959",
     "selectedColor": "#1c1b21",

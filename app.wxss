@@ -1,6 +1,7 @@
 /**app.wxss**/
 @import "./assets/iconfont/iconfont.wxss";
 
+/* 公用容器 */
 .container {
   padding: 0;
   background-color:#f5fafe;
@@ -10,3 +11,16 @@
   box-sizing: border-box;
   font-size: 30rpx;
 } 
+
+/* 版权信息 */
+.copyright {
+  display: flex;
+
+  /* 置于页面底部正中间 */
+  align-self:center;
+  flex: 1;
+  align-items: flex-end;     
+  padding-bottom: 10rpx;
+  font-size: 28rpx;
+  color:#999;
+}
